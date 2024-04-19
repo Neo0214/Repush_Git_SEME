@@ -1,0 +1,14 @@
+#rewardPanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: rgba(88, 85, 85, 0.5); /* 半透明黑色背景 */
+    padding: 20px;
+    text-align: center;
+}
+button.rewardButton {
+    margin: 10px;
+    padding: 10px;
+}
