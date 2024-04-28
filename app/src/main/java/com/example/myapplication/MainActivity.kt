@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
             // Handle the data from intent
             val value = result.data?.getParcelableExtra<GameReturnData>("RetData")
             if (value != null) {
-                appDataBase.updateGameTime(value.gameOrder,value.UseTime)
+                //appDataBase.updateGameTime(value.gameOrder,value.UseTime)
+                
             }
         }
     }
