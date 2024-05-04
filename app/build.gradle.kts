@@ -1,9 +1,12 @@
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
+
 
 android {
     namespace = "com.example.myapplication"
@@ -53,11 +56,20 @@ android {
 
 dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    val room_version = "2.6.1"
+//    val room_version = "2.6.1"
+//
+//    implementation(libs.androidx.room.runtime)
+//    kapt(libs.androidx.room.compiler)
+//    implementation(libs.androidx.room.ktx)
+    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation ("androidx.activity:activity-ktx:1.6.1")// 使用最新版本
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1") // 使用最新版本
+    implementation ("androidx.compose.runtime:runtime-livedata")
+    implementation ("com.google.code.gson:gson:2.8.9")
 
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
