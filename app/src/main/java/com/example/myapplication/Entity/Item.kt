@@ -16,5 +16,6 @@ data class Item(
     @PrimaryKey val id:Int=0,
     val gameName:String,
     val gameIntroduce:String,
-    val gamePlayTime: Long
+    var gamePlayTime: Double,
+    val gameScore:Long
 ): Parcelable

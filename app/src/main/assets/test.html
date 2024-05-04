@@ -6,11 +6,15 @@
 </head>
 
 <body>
-    <button onclick="getGameData()">Get Game Data</button>
-
+    <button onclick="getGameData()">Test Select</button>
+    <button onclick="updateGameTime()">UpdateTime Test</button>
     <script type="text/javascript">
         function getGameData() {
             window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据
+        }
+        // 参数1是游戏主键id，参数2是这次游玩时长，单位小时。（比如这次玩了0.5小时，之前玩了2小时，就记录为2.5小时）
+        function updateGameTime(){
+            window.Android.UpdateGameTime(1,0.5)
         }
         function handleItemData(data) {
             try {
@@ -22,6 +26,8 @@
             }
         }
     </script>
+
+    
 </body>
 
 </html>

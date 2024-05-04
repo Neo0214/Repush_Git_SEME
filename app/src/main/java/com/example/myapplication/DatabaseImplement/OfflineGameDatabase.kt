@@ -10,4 +10,5 @@ class OfflineGameDatabase(private val itemDao: ItemDao):ItemsRepository {
 
     override suspend fun insertGame(item: Item) =itemDao.insert(item)
     override suspend fun deleteGame(item: Item)=itemDao.delete(item)
+    override suspend fun updateGameTime(id: Int, GameTime:Double) = itemDao.updateItemGameTime(id,GameTime)
 }

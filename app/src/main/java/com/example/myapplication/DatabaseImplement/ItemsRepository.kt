@@ -8,4 +8,5 @@ interface ItemsRepository {
     fun getOneGame(id:Int):Item?
     suspend fun insertGame(item: Item)
     suspend fun deleteGame(item: Item)
+    suspend fun updateGameTime(id: Int,GameTime:Double)
 }

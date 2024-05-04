@@ -26,13 +26,24 @@ class GameViewModel(private val repository: ItemsRepository) :ViewModel() {
             Log.d("insertGameItem","insert Data Now")
             repository.insertGame(item)
             Log.d("insertGameItem","finish insert")
+
         }
     }
 
-    fun updateGameInfo(item: Item){
+//    fun updateGameInfo(item: Item){
+//        viewModelScope.launch {
+//            Log.d("updateGameItem","update data now")
+//
+//        }
+//    }
+    // 本次游玩时间加上之前的时间.单位：小时,类似于Steam的2.1小时
+    fun UpdateGameTime(id: Int,time:Double){
         viewModelScope.launch {
-            Log.d("updateGameItem","update data now")
-            repository
+            Log.d("updateTime","Update Time Now")
+            repository.updateGameTime(id,time)
+            Log.d("updateTime", "Finish Update Time")
+
+
         }
     }
 }

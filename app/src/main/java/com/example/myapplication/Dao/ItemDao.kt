@@ -24,4 +24,7 @@ interface ItemDao {
     fun getItem(id: Int): Item?
 
 
+    @Query("UPDATE items SET gamePlayTime =:time+gamePlayTime WHERE id= :id")
+    suspend fun updateItemGameTime(id: Int,time:Double)
+
 }

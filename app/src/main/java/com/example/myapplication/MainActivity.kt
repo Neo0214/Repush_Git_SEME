@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 WebViewScr(modifier = Modifier
                     .weight(1f)
                     .fillMaxSize(), url =url, viewModel = viewModel )
-//                InsertButton(viewModel = viewModel)
+               // InsertButton(viewModel = viewModel)
 //                GetButton(viewModel = viewModel)
             }
         }
@@ -114,8 +114,8 @@ fun InsertButton(viewModel: GameViewModel) {
     Button(
         onClick = {
             // 按钮点击事件，调用 ViewModel 的 insertGame 方法
-            viewModel.insertGameItem(Item(id = 1, gameName = "2048", gameIntroduce = "Test", gamePlayTime = 100))
-            viewModel.insertGameItem(Item(id = 2, gameName = "tset", gameIntroduce = "Test", gamePlayTime = 100))
+            viewModel.insertGameItem(Item(id = 1, gameName = "2048", gameIntroduce = "Test", gamePlayTime = 100.0, gameScore = 0))
+            viewModel.insertGameItem(Item(id = 2, gameName = "tset", gameIntroduce = "Test", gamePlayTime = 100.0, gameScore = 0))
         },
         modifier = Modifier.padding(16.dp)
     ) {
