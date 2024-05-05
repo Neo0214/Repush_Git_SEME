@@ -5,7 +5,9 @@
   <button @click="open2048()">2048</button>
   <button @click="openplane()">plane</button>
   <button @click="opensheep()">sheep</button>
+
   <button @click="openpersonal()">personal</button>
+
 </template>
 
 <script>
@@ -27,11 +29,9 @@ export default {
     getGameData() {
       window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据
     },
-
     updateGameTime(){
       window.Android.UpdateGameTime(1,0.5)
     },
-
     handleItemData(data) {
       try {
         const item = JSON.parse(data); // 解析 JSON 数据
@@ -59,9 +59,7 @@ export default {
     //跳转到羊了个羊游戏
     opensheep() {
       this.openLink('../../public/sheep/index.html');
-      // this.$router.push('/plane');
     },
-
     //跳转到个人游戏库
     openpersonal() {
       this.openLink('/personal');
