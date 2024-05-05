@@ -1,33 +1,33 @@
-<!DOCTYPE html>
-<html>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
 
-<head>
-    <title>WebView JS Interface</title>
-</head>
+<!--<head>-->
+<!--    <title>WebView JS Interface</title>-->
+<!--</head>-->
 
-<body>
-    <button onclick="getGameData()">Test Select</button>
-    <button onclick="updateGameTime()">UpdateTime Test</button>
-    <script type="text/javascript">
-        function getGameData() {
-            window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据
-        }
-        // 参数1是游戏主键id，参数2是这次游玩时长，单位小时。（比如这次玩了0.5小时，之前玩了2小时，就记录为2.5小时）
-        function updateGameTime(){
-            window.Android.UpdateGameTime(1,0.5)
-        }
-        function handleItemData(data) {
-            try {
-                const item = JSON.parse(data); // 解析 JSON 数据
-                console.log("Game: " + item.gameName + "\nIntroduction: " + item.gameIntroduce);
-            } catch (e) {
-                console.error("Error parsing JSON: ", e);
-                alert("Error parsing JSON: " + e.message); // 显示解析错误
-            }
-        }
-    </script>
+<!--<body>-->
+<!--    <button onclick="getGameData()">Test Select</button>-->
+<!--    <button onclick="updateGameTime()">UpdateTime Test</button>-->
+<!--    <script type="text/javascript">-->
+<!--        function getGameData() {-->
+<!--            window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据-->
+<!--        }-->
+<!--        // 参数1是游戏主键id，参数2是这次游玩时长，单位小时。（比如这次玩了0.5小时，之前玩了2小时，就记录为2.5小时）-->
+<!--        function updateGameTime(){-->
+<!--            window.Android.UpdateGameTime(1,0.5)-->
+<!--        }-->
+<!--        function handleItemData(data) {-->
+<!--            try {-->
+<!--                const item = JSON.parse(data); // 解析 JSON 数据-->
+<!--                console.log("Game: " + item.gameName + "\nIntroduction: " + item.gameIntroduce);-->
+<!--            } catch (e) {-->
+<!--                console.error("Error parsing JSON: ", e);-->
+<!--                alert("Error parsing JSON: " + e.message); // 显示解析错误-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
 
-    
-</body>
 
-</html>
+<!--</body>-->
+
+<!--</html>-->

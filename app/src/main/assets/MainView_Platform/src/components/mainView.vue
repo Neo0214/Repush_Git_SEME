@@ -1,10 +1,69 @@
 <template>
+  <button @click="getGameData()">Test Select</button>
+  <button @click="updateGameTime()">UpdateTime Test</button>
 
+  <button @click="openpersonal()">personal</button>
 </template>
 
 <script>
 
+// import NewsDetails from './NewsDetails.vue';
 
+export default {
+  components: {
+
+  },
+
+  data() {
+    return {
+      ok: '',
+    }
+  },
+
+  methods: {
+    getGameData() {
+      window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据
+    },
+
+    updateGameTime(){
+      window.Android.UpdateGameTime(1,0.5)
+    },
+
+    handleItemData(data) {
+      try {
+        const item = JSON.parse(data); // 解析 JSON 数据
+        console.log("Game: " + item.gameName + "\nIntroduction: " + item.gameIntroduce);
+      } catch (e) {
+        console.error("Error parsing JSON: ", e);
+        alert("Error parsing JSON: " + e.message); // 显示解析错误
+      }
+    },
+
+    //打开链接的页面
+    openLink(url) {
+      window.open(url, '_blank');
+    },
+    // //跳转到2048游戏
+    // open2048() {
+    //   this.openLink('/2048');
+    //   // this.$router.push('/2048');
+    // },
+    // //跳转到飞机大战游戏
+    // openplane() {
+    //   this.openLink('/plane');
+    //   // this.$router.push('/plane');
+    // },
+
+    //跳转到飞机大战游戏
+    openpersonal() {
+      this.openLink('/personal');
+      // this.$router.push('/personal');
+    },
+
+
+  },
+
+}
 
 </script>
 

@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import MainView from '../components/mainView.vue'
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/2048',
-            name: '2048',
-            component: () => import('../../../2048/index.html')
+            path: '/',
+            name: 'mainView',
+            component: () => import('../components/mainView.vue')
         },
         {
-            path: '/plane',
-            name: 'plane',
-            component: () => import('../../../plane/index1.html')
+            path: '/personal',
+            component: () => import('../components/personal.vue')
         },
 
     ]
