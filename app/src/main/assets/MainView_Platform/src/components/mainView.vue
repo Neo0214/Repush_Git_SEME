@@ -65,8 +65,8 @@ export default {
     },
     //跳转到个人游戏库
     openpersonal() {
-      this.openLink('/personal');
-      // this.$router.push('/personal');
+      // this.openLink('/personal');
+      this.$router.push('/personal');
     },
 
 
