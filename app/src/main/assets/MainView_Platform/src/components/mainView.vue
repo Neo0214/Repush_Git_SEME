@@ -8,15 +8,18 @@
 
   <button @click="openpersonal()">personal</button>
 
+<!-- 底部导航栏-->
+  <bar></bar>
 </template>
 
 <script>
 
 // import NewsDetails from './NewsDetails.vue';
+import Bar from './bar.vue'
 
 export default {
   components: {
-
+     bar:Bar,
   },
 
   data() {

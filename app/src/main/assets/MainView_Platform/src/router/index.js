@@ -11,8 +11,20 @@ const router = createRouter({
             component: () => import('../components/mainView.vue')
         },
         {
+            path: '/mainView',
+            component: () => import('../components/mainView.vue')
+        },
+        {
             path: '/personal',
             component: () => import('../components/personal.vue')
+        },
+        {
+            path: '/ranking',
+            component: () => import('../components/ranking.vue')
+        },
+        {
+            path: '/gameLibrary',
+            component: () => import('../components/gameLibrary.vue')
         },
 
     ]
