@@ -54,12 +54,13 @@ export default {
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 80%;
   height: 50px;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  left:2vw;
 }
 
 .nav-item {
@@ -69,16 +70,14 @@ export default {
   text-align: center;
   font-size: 12px;
   color: #828180;
+  position: relative;
+  left:5vw;
 }
 
 .nav-item.active {
   color: #2B88FF;
 }
 
-.iconfont {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
 
 .nav-text {
   margin-top: 2px;

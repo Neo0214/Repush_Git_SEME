@@ -1,6 +1,5 @@
 <template>
 
-  <bar></bar>
 </template>
 
 
@@ -11,7 +10,7 @@ export default {
   name: "ranking",
 
   components: {
-    bar:Bar,
+
   },
 
 
