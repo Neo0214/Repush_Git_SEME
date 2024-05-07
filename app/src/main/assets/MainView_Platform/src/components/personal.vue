@@ -1,6 +1,6 @@
 <template>
 
-  <a>个人游戏库111111</a>
+  <a>个人信息页</a>
 </template>
 
 <script>

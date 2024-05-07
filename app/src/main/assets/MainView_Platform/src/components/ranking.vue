@@ -1,5 +1,6 @@
 <template>
 
+  <a>排行榜页</a>
 </template>
 
 

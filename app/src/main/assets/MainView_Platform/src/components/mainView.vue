@@ -10,7 +10,7 @@
           </template>
         </el-input>
       </el-main>
-      <el-aside width="15%" style="position: relative; left:-8vw;">
+      <el-aside width="15%" style="position: relative; left:-8vw;top:-1vw">
         <!--搜索栏旁头像-->
         <img :src="'../../public/imgForMain/person.png'" class="imgPerson">
       </el-aside>
