@@ -23,12 +23,12 @@
     <p class="mainForP1">主打推荐</p>
     <p class="mainForP2">{{mainGame.gameName}}</p>
     <p class="mainForP3">休闲益智，娱乐消遣</p>
-    <div class="mainGameBox" :style="{ backgroundImage: `url('../../public/imgForMain/test1.png')`,}">
+    <div class="mainGameBox" :style="{ backgroundImage: `url(${returnGameBigImgUrl(mainGame.gameName)})`,}">
       <!--内嵌的简介-->
       <div class="introBox">
         <el-row :gutter="20" class="introduction">
           <el-col :span="4" style="position: relative;left:2vw;">
-            <img class="mainGameLogo" :src="'../../public/imgForMain/test2.png'" alt="简介小图">
+            <img class="mainGameLogo" :src="returnGameImgUrl(mainGame.gameName)" alt="简介小图">
           </el-col>
           <el-col :span="16">
             <div class="textBox">
@@ -37,7 +37,7 @@
             </div>
           </el-col>
           <el-col :span="4" style="position: relative;left:-5vw;top:2vw">
-            <el-button type="info" round class="button">游玩</el-button>
+            <el-button type="info" round class="button" @click="openGame(mainGame.gameName)">游玩</el-button>
           </el-col>
         </el-row>
       </div>
@@ -54,7 +54,7 @@
         <div class="recommandBox">
           <el-row :gutter="30">
             <el-col :span="6" style="position: relative;left:2vw;">
-              <img class="recommandGameLogo" :src="'../../public/imgForMain/test2.png'" alt="简介小图">
+              <img class="recommandGameLogo" :src="returnGameImgUrl(item.gameName)" alt="简介小图">
             </el-col>
             <el-col :span="14">
               <div class="recommandtextBox">
@@ -63,7 +63,7 @@
               </div>
             </el-col>
             <el-col :span="4" style="position: relative;left:-5vw;top:2vw">
-              <el-button :type="'primary'" class="recommendbutton" text bg >游玩</el-button>
+              <el-button :type="'primary'" class="recommendbutton"  @click="openGame(item.gameName)" text bg>游玩</el-button>
             </el-col>
           </el-row>
         </div>
@@ -158,27 +158,22 @@ export default {
     openLink(url) {
       window.open(url, '_blank');
     },
-    //跳转到2048游戏
-    open2048() {
-      this.openLink('../../public/2048/index.html');
-      // this.$router.push('/2048');
-    },
-    //跳转到飞机大战游戏
-    openplane() {
-      this.openLink('../../public/plane/index1.html');
-      // this.$router.push('/plane');
-    },
-    //跳转到羊了个羊游戏
-    opensheep() {
-      this.openLink('../../public/sheep/index.html');
-    },
-    //跳转到个人游戏库
-    openpersonal() {
-      // this.openLink('/personal');
-      this.$router.push('/personal');
+
+    //跳转到游戏
+    openGame(gameName){
+      let gameUrl;
+      gameUrl='../../public/'+ (String)(gameName) +'/index.html';
+      this.openLink(gameUrl);
     },
 
-
+    //返回游戏对应图片路径
+    returnGameImgUrl(gameName){
+      return '../../public/imgForMain/'+ (String)(gameName) +'.png';
+    },
+    //返回游戏对应图片路径
+    returnGameBigImgUrl(gameName){
+      return '../../public/imgForMain/'+ (String)(gameName) +'Big.png';
+    },
   },
 
 }
