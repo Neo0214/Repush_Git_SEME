@@ -49,6 +49,17 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
            }
        }
     }
+    @JavascriptInterface
+    fun getAllGameInfo(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val item = myviewModel.GetAllGameInfo()
+            withContext(Dispatchers.Main)
+            {
+                val data = StateCode(200,"success select",item)
+                outputMyData(data)
+            }
+        }
+    }
 
     @JavascriptInterface
     fun UpdateGameTime(id: Int,time:Double){

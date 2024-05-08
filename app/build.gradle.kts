@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp") version "1.9.0-1.0.13"
+    
 }
 
 
@@ -69,6 +70,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1") // 使用最新版本
     implementation ("androidx.compose.runtime:runtime-livedata")
     implementation ("com.google.code.gson:gson:2.8.9")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

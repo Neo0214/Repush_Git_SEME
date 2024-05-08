@@ -43,8 +43,13 @@ class GameViewModel(private val repository: ItemsRepository) :ViewModel() {
             repository.updateGameTime(id,time)
             Log.d("updateTime", "Finish Update Time")
 
-
         }
+    }
+    fun GetAllGameInfo():List<Item>?{
+        Log.d("getAllGameInfo","start to get all game info")
+        val tmp = repository.getAllGame()
+        Log.d("getALlGameInfo","finish to get all game info")
+        return tmp
     }
 }
 class GameViewModelFactory(private val repository: ItemsRepository) :ViewModelProvider.Factory{

@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 WebViewScr(modifier = Modifier
                     .weight(1f)
                     .fillMaxSize(), url =url, viewModel = viewModel )
-               // InsertButton(viewModel = viewModel)
+//                InsertButton(viewModel = viewModel)
 //                GetButton(viewModel = viewModel)
             }
         }
@@ -102,6 +102,13 @@ fun WebViewScr(modifier: Modifier,url: String,viewModel: GameViewModel) {
                 }
                 settings.javaScriptEnabled = true // 启用 JavaScript
                 addJavascriptInterface(WebApi(this,viewModel), "Android") // 注入接口
+
+//                // 允许同源政策
+//                settings.allowFileAccess = true
+//                settings.allowContentAccess = true
+//                settings.allowFileAccessFromFileURLs = true
+//                settings.allowUniversalAccessFromFileURLs = true
+
                 loadUrl(url)
             }
         },
@@ -114,8 +121,9 @@ fun InsertButton(viewModel: GameViewModel) {
     Button(
         onClick = {
             // 按钮点击事件，调用 ViewModel 的 insertGame 方法
-            viewModel.insertGameItem(Item(id = 1, gameName = "2048", gameIntroduce = "Test", gamePlayTime = 100.0, gameScore = 0))
-            viewModel.insertGameItem(Item(id = 2, gameName = "tset", gameIntroduce = "Test", gamePlayTime = 100.0, gameScore = 0))
+            viewModel.insertGameItem(Item(id = 1, gameName = "2048", gameIntroduce = "Test", gamePlayTime = 100.0, bestScoreInGame = 0, gameRecommendationScore = 9.8))
+            viewModel.insertGameItem(Item(id = 2, gameName = "tset", gameIntroduce = "Test", gamePlayTime = 100.0, bestScoreInGame = 0, gameRecommendationScore = 9.5))
+            viewModel.insertGameItem(Item(id = 1000, gameName = "2048", gameIntroduce = "一款轻松愉快的2048合成游戏，滑动屏幕合成2048", gamePlayTime = 0.0, bestScoreInGame = 0, gameRecommendationScore = 9.8))
         },
         modifier = Modifier.padding(16.dp)
     ) {

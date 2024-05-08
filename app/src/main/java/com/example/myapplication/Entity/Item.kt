@@ -13,9 +13,21 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "items")
 data class Item(
+    // 游戏主键id，无关
     @PrimaryKey val id:Int=0,
+
+    // 游戏名称
     val gameName:String,
+
+    //游戏简介
     val gameIntroduce:String,
+
+    //游玩总时长
     var gamePlayTime: Double,
-    val gameScore:Long
+
+    //当前游戏获得最高分
+    val bestScoreInGame:Long,
+
+    //游戏评分
+    val gameRecommendationScore:Double
 ): Parcelable
