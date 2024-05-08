@@ -12,7 +12,7 @@
       </el-main>
       <el-aside width="15%" style="position: relative; left:-6vw;top:4vw">
         <!--搜索栏旁头像-->
-        <img :src="'../../public/imgForMain/person.png'" class="imgPerson">
+        <img :src="'/imgForMain/person.png'" class="imgPerson">
       </el-aside>
     </el-container>
   </div>
@@ -37,11 +37,11 @@
                 <p class="itemGameIntro">{{item.gameIntroduce}}</p>
               </el-col>
               <el-col :span="3" style="position: relative;left:-3vw">
-                <img :src="'../../public/imgForMain/score.png'" class="imgsvg">
+                <img :src="'/imgForMain/score.png'" class="imgsvg">
                 <p class="textsvg">{{item.gameRecommendationScore}}</p>
               </el-col>
               <el-col :span="3" style="position: relative;left:-3vw">
-                <img :src="'../../public/imgForMain/time.png'" class="imgsvg">
+                <img :src="'/imgForMain/time.png'" class="imgsvg">
                 <p class="textsvg">{{item.gamePlayTime}}h</p>
               </el-col>
             </el-row>
@@ -52,16 +52,19 @@
     </el-row>
   </div>
 
+  <bar></bar>
 
 </template>
 
 <script>
 
+import Bar from "@/components/bar.vue";
+
 export default {
   name: "gameLibrary",
 
   components: {
-
+    bar:Bar,
   },
   data() {
     return {
@@ -111,17 +114,17 @@ export default {
     //跳转到游戏
     openGame(gameName){
       let gameUrl;
-      gameUrl='../../public/'+ (String)(gameName) +'/index.html';
+      gameUrl='/'+ (String)(gameName) +'/index.html';
       this.openLink(gameUrl);
     },
 
     //返回游戏对应图片路径
     returnGameImgUrl(gameName){
-      return '../../public/imgForMain/'+ (String)(gameName) +'.png';
+      return '/imgForMain/'+ (String)(gameName) +'.png';
     },
     //返回游戏对应图片路径
     returnGameBigImgUrl(gameName){
-      return '../../public/imgForMain/'+ (String)(gameName) +'Big.png';
+      return '/imgForMain/'+ (String)(gameName) +'Big.png';
     },
   },
 }

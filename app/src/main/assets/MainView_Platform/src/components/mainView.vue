@@ -71,6 +71,8 @@
     </el-row>
   </div>
 
+  <bar></bar>
+
 
   <!--测试按钮-->
   <!--    <button @click="getGameData()">Test Select</button>-->
@@ -85,6 +87,7 @@ import Bar from './bar.vue'
 
 export default {
   components: {
+    bar:Bar,
   },
 
   //刷新该页面时更新数据

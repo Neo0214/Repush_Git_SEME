@@ -32,17 +32,23 @@ export default {
     console.log(currentRoute);
     if(currentRoute.fullPath==='/')
       this.isActive[0]=true;
-    else if(currentRoute.fullPath==='/ranking')
+    else if(currentRoute.fullPath==='/ranking'){
+      this.isActive[0]=false;
       this.isActive[1]=true;
-    else if(currentRoute.fullPath==='/gameLibrary')
+    }
+    else if(currentRoute.fullPath==='/gameLibrary'){
+      this.isActive[0]=false;
       this.isActive[2]=true;
-    else if(currentRoute.fullPath==='/personal')
+    }
+    else if(currentRoute.fullPath==='/personal'){
+      this.isActive[0]=false;
       this.isActive[3]=true;
+    }
   },
 
   data(){
     return{
-       isActive:[false,false,false,false],
+       isActive:[true,false,false,false],
     }
   },
 
@@ -85,56 +91,56 @@ export default {
 }
 
 .main {
-  background-image: url(../../public/imgForMain/main.png);
+  background-image: url(/imgForMain/main.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .main-active {
-  background-image: url(../../public/imgForMain/main-active.png);
+  background-image: url(/imgForMain/main-active.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .ranking {
-  background-image: url(../../public/imgForMain/ranking.png);
+  background-image: url(/imgForMain/ranking.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .ranking-active {
-  background-image: url(../../public/imgForMain/ranking-active.png);
+  background-image: url(/imgForMain/ranking-active.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .gameLibrary {
-  background-image: url(../../public/imgForMain/gameLibrary.png);
+  background-image: url(/imgForMain/gameLibrary.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .gameLibrary-active {
-  background-image: url(../../public/imgForMain/gameLibrary-active.png);
+  background-image: url(/imgForMain/gameLibrary-active.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .personal {
-  background-image: url(../../public/imgForMain/personal.png);
+  background-image: url(/imgForMain/personal.png);
   background-size: cover;
   width: 24px;
   height: 24px;
 }
 
 .personal-active {
-  background-image: url(../../public/imgForMain/personal-active.png);
+  background-image: url(/imgForMain/personal-active.png);
   background-size: cover;
   width: 24px;
   height: 24px;

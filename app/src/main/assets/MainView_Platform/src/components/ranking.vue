@@ -61,7 +61,7 @@
     </el-row>
 
   </div>
-
+<bar></bar>
 </template>
 
 
@@ -72,7 +72,7 @@ export default {
   name: "ranking",
 
   components: {
-
+    bar:Bar,
   },
 
   data() {
