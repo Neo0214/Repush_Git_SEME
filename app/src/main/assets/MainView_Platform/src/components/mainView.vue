@@ -12,7 +12,7 @@
       </el-main>
       <el-aside width="15%" style="position: relative; left:-8vw;top:-1vw">
         <!--搜索栏旁头像-->
-        <img :src="'../../public/imgForMain/person.png'" class="imgPerson">
+        <img :src="'/imgForMain/person.png'" class="imgPerson">
       </el-aside>
     </el-container>
   </div>
@@ -179,17 +179,17 @@ export default {
     //跳转到游戏
     openGame(gameName){
       let gameUrl;
-      gameUrl='../../public/'+ (String)(gameName) +'/index.html';
+      gameUrl='/'+ (String)(gameName) +'/index.html';
       this.openLink(gameUrl);
     },
 
     //返回游戏对应图片路径
     returnGameImgUrl(gameName){
-      return '../../public/imgForMain/'+ (String)(gameName) +'.png';
+      return '/imgForMain/'+ (String)(gameName) +'.png';
     },
     //返回游戏对应图片路径
     returnGameBigImgUrl(gameName){
-      return '../../public/imgForMain/'+ (String)(gameName) +'Big.png';
+      return '/imgForMain/'+ (String)(gameName) +'Big.png';
     },
   },
 
