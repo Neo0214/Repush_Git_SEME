@@ -29,6 +29,7 @@ export default {
 
   mounted() {
     const currentRoute = this.$route; // 获取当前路由
+    console.log(currentRoute);
     if(currentRoute.fullPath==='/')
       this.isActive[0]=true;
     else if(currentRoute.fullPath==='/ranking')

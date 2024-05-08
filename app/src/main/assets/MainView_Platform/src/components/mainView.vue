@@ -81,13 +81,16 @@
 </template>
 
 <script>
-
-// import NewsDetails from './NewsDetails.vue';
 import Bar from './bar.vue'
 
 export default {
   components: {
+  },
 
+  //刷新该页面时更新数据
+  mounted() {
+    this.mainGame=this.getGameDataByid(1).item[0];
+    this.recommandGameList=this.getAllGameData().item;
   },
 
   data() {
@@ -138,11 +141,14 @@ export default {
   },
 
   methods: {
-    getGameData() {
-      window.Android.getOneGameInfo(1); // 获取 id 为 1 的游戏数据
+    getGameDataByid(id) {
+      return window.Android.getOneGameInfo(id); // 获取 id 为 1 的游戏数据
     },
     updateGameTime(){
-      window.Android.UpdateGameTime(1,0.5)
+      return window.Android.UpdateGameTime(1,0.5);
+    },
+    getAllGameData(){
+      return window.Android.getAllGameInfo()();
     },
     handleItemData(data) {
       try {
