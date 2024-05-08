@@ -89,8 +89,8 @@ export default {
 
   //刷新该页面时更新数据
   mounted() {
-    this.mainGame=this.getGameDataByid(1).item[0];
-    this.recommandGameList=this.getAllGameData().item;
+    this.getGameDataByid(1);
+    this.getAllGameData();
   },
 
   data() {
@@ -142,18 +142,29 @@ export default {
 
   methods: {
     getGameDataByid(id) {
-      return window.Android.getOneGameInfo(id); // 获取 id 为 1 的游戏数据
+      window.Android.getOneGameInfo(id); // 获取 id 为 1 的游戏数据
     },
     updateGameTime(){
-      return window.Android.UpdateGameTime(1,0.5);
+      window.Android.UpdateGameTime(1,0.5);
     },
     getAllGameData(){
-      return window.Android.getAllGameInfo()();
+      window.Android.getAllGameInfo()();
     },
-    handleItemData(data) {
+    handleItemDataOne(data) {
       try {
-        const item = JSON.parse(data); // 解析 JSON 数据
-        console.log("Game: " + item.gameName + "\nIntroduction: " + item.gameIntroduce);
+        const tmp = JSON.parse(data); // 解析 JSON 数据
+        // console.log("Game: " + tmp.item.gameName + "\nIntroduction: " + tmp.item.gameIntroduce);
+        this.mainGame=tmp.item;
+      } catch (e) {
+        console.error("Error parsing JSON: ", e);
+        alert("Error parsing JSON: " + e.message); // 显示解析错误
+      }
+    },
+    handleItemDataList(data) {
+      try {
+        const tmp = JSON.parse(data); // 解析 JSON 数据
+        // console.log("Game: " + tmp.gameName + "\nIntroduction: " + tmp.gameIntroduce);
+        this.recommandGameList=tmp.item;
       } catch (e) {
         console.error("Error parsing JSON: ", e);
         alert("Error parsing JSON: " + e.message); // 显示解析错误
