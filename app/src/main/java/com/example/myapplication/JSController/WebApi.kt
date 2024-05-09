@@ -20,14 +20,23 @@ import kotlinx.coroutines.withContext
 
 
 class WebApi(private val webView: WebView,private val myviewModel: GameViewModel) {
-    private fun outputMyData(stateCode: StateCode){
+    private fun outputMyData(stateCode: StateCode,mode:Int){
         val gson= Gson()
         val jsonData = gson.toJson(stateCode).replace("\"", "\\\"")
         Log.d("MyJsonData", jsonData)
-        val jsCode = "javascript:handleItemData(\"$jsonData\")"
-        webView.post {
-            webView.evaluateJavascript(jsCode, null)
+        if(mode ==0){
+            val jsCode = "javascript:handleItemDataOne(\"$jsonData\")"
+            webView.post {
+                webView.evaluateJavascript(jsCode, null)
+            }
         }
+        else{
+            val jsCode = "javascript:handleItemDataList(\"$jsonData\")"
+            webView.post {
+                webView.evaluateJavascript(jsCode, null)
+            }
+        }
+
 
     }
     @JavascriptInterface
@@ -45,7 +54,8 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
 //                   webView.evaluateJavascript(jsCode, null)
 //               }
                val data = StateCode(200,"success select",item)
-               outputMyData(data)
+               outputMyData(data,0)
+
            }
        }
     }
@@ -56,7 +66,7 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
             withContext(Dispatchers.Main)
             {
                 val data = StateCode(200,"success select",item)
-                outputMyData(data)
+                outputMyData(data,1)
             }
         }
     }
@@ -67,7 +77,7 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
             val item = myviewModel.UpdateGameTime(id,time)
             withContext(Dispatchers.Main){
                 val data = StateCode(200,"success")
-                outputMyData(data)
+                outputMyData(data,2)
             }
         }
     }

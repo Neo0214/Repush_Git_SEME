@@ -64,6 +64,7 @@ class MainActivity : ComponentActivity() {
 //        }
 //    }
     private val url ="file:///android_asset/test.html"
+//    private val url = "http://192.168.56.1:3000/"
     private val appDataContainer:AppDataContainer = AppDataContainer(this)
     private val viewModel: GameViewModel by viewModels<GameViewModel> {
         GameViewModelFactory(appDataContainer.itemsRepository)

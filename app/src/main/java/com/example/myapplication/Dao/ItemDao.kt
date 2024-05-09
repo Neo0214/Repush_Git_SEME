@@ -23,7 +23,7 @@ interface ItemDao {
     @Query("SELECT * from items WHERE id = :id")
     fun getItem(id: Int): Item?
 
-    @Query("SELECT * from items WHERE id >1000")
+    @Query("SELECT * from items WHERE id >999")
     fun getAllItem():List<Item>?
 
     @Query("UPDATE items SET gamePlayTime =:time+gamePlayTime WHERE id= :id")

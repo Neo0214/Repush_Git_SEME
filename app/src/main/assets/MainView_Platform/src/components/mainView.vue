@@ -151,7 +151,7 @@ export default {
       window.Android.UpdateGameTime(1,0.5);
     },
     getAllGameData(){
-      window.Android.getAllGameInfo()();
+      window.Android.getAllGameInfo();
     },
     handleItemDataOne(data) {
       try {

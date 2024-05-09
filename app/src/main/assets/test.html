@@ -1,33 +1,43 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-
-<!--<head>-->
-<!--    <title>WebView JS Interface</title>-->
-<!--</head>-->
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Data</title>
+</head>
 <body>
     <button onclick="getGameData()">Test Select</button>
     <button onclick="updateGameTime()">UpdateTime Test</button>
+    <button onclick="getOneGameData()">Test One Select</button>
     <script type="text/javascript">
         function getGameData() {
-            window.Android.getAllGameInfo(); // 获取 id 为 1 的游戏数据
+            window.Android.getAllGameInfo(); // 获取所有游戏数据
         }
-        // 参数1是游戏主键id，参数2是这次游玩时长，单位小时。（比如这次玩了0.5小时，之前玩了2小时，就记录为2.5小时）
+        
+        function getOneGameData(){
+            window.Android.getOneGameInfo(1000);
+        }
         function updateGameTime(){
-            window.Android.UpdateGameTime(1,0.5)
+            window.Android.UpdateGameTime(1, 0.5); // 更新游戏时间
         }
-        function handleItemData(data) {
+
+        function handleItemDataList(data) {
             try {
-                const item = JSON.parse(data); // 解析 JSON 数据
-                console.log("Game: " + item.item.gameName + "\nIntroduction: " + item.item.gameIntroduce);
+                const jsonData = JSON.parse(data);
+                console.log("Game: " + jsonData.item[0].gameName + "\nIntroduction: " + jsonData.item[0].gameIntroduce);
             } catch (e) {
                 console.error("Error parsing JSON: ", e);
-                alert("Error parsing JSON: " + e.message); // 显示解析错误
+                alert("Error parsing JSON: " + e.message);
+            }
+        }
+        function handleItemDataOne(data) {
+            try {
+                const jsonData = JSON.parse(data);
+                console.log("Game: " + jsonData.item.gameName + "\nIntroduction: " + jsonData.item.gameIntroduce);
+            } catch (e) {
+                console.error("Error parsing JSON: ", e);
+                alert("Error parsing JSON: " + e.message);
             }
         }
     </script>
-
-
-<!--</body>-->
-
-<!--</html>-->
+</body>
+</html>
