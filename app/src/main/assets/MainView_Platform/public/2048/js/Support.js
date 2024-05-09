@@ -3,6 +3,8 @@ gridContainerWidth=0.92*documentWidth;
 cellSideLength=0.18*documentWidth;
 cellSpace=0.04*documentWidth;
 
+
+
 function getPosTop(i,j){
 	return cellSpace+i*(cellSpace+cellSideLength);
 }

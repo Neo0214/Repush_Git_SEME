@@ -1,296 +1,377 @@
+var board=new Array();
+var score=0;
+var hasConflicted=new Array();
 
+var startx=0;
+var starty=0;
+var endx=0;
+var endy=0;
 
-// 全局变量
-let board = [];
-let score = 0;
-let hasConflicted = [];
+$(document).ready(function(){
+	prepareForMobile();
+	newgame();	
+	score=0;
+	updateScore(score);
+})
 
-let startX = 0;
-let startY = 0;
-let endX = 0;
-let endY = 0;
-
-$(document).ready(function() {
-    prepareForMobile();
-    newGame();
-    score = 0;
-    updateScore(score);
-});
-
-function prepareForMobile() {
-    if (documentWidth > 500) {
-        gridContainerWidth = 500;
-        cellSpace = 20;
-        cellSideLength = 100;
-    }
-
-    $("#main").css({
-        width: gridContainerWidth - 2 * cellSpace,
-        height: gridContainerWidth - 2 * cellSpace,
-        padding: cellSpace,
-        borderRadius: 0.01 * gridContainerWidth
-    });
-
-    $(".main-box").css({
-        width: cellSideLength,
-        height: cellSideLength,
-        borderRadius: 0.01 * cellSideLength
-    });
+function prepareForMobile(){
+	
+	if(documentWidth>500){
+		gridContainerWidth=500;
+		cellSpace=20;
+		cellSideLength=100;
+	}
+	
+	$("#main").css("width",gridContainerWidth-2*cellSpace);
+	$("#main").css("height",gridContainerWidth-2*cellSpace);
+	$("#main").css("padding",cellSpace);
+	$("#main").css("border-radius",0.01*gridContainerWidth);
+	
+	$(".main-box").css("width",cellSideLength);
+	$(".main-box").css("height",cellSideLength);
+	$(".main-box").css("border-radius",0.01*cellSideLength);
 }
 
-function newGame() {
-    init();
-    generateOneNumber();
-    generateOneNumber();
+function newgame(){
+	//初始化棋盘格
+	init();
+	//随机生成两个数字
+	generateOneNumber();
+	generateOneNumber();
+}
+function init(){
+	for(var i=0;i<4;i++){
+		for(var j=0;j<4;j++){
+			var gridCell=$("#box-"+i+"-"+j)
+			gridCell.css("top",getPosTop(i,j))
+			gridCell.css("left",getPosLeft(i,j))
+		}
+	}
+	
+	for(var i=0;i<4;i++){
+		board[i]=new Array();
+		hasConflicted[i]=new Array();
+		for(var j=0;j<4;j++){
+			board[i][j]=0;	
+			hasConflicted[i][j]=false;	
+		}
+	}
+	updateBoardView();
+	
+	score=0;
+}
+function updateBoardView(){
+	$(".number-cell").remove();
+	for(var i=0; i<4;i++){
+		for(var j=0;j<4;j++){
+			$("#main").append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>')
+			var theNumberCell=$('#number-cell-'+i+'-'+j)
+			
+			if(board[i][j]==0){
+				theNumberCell.css({"width":"0","height":"0"})
+				theNumberCell.css("top",getPosTop(i,j)+cellSideLength/2)
+				theNumberCell.css("left",getPosLeft(i,j)+cellSideLength/2)
+			}else{
+				theNumberCell.css('width',cellSideLength);
+                theNumberCell.css('height',cellSideLength);
+                theNumberCell.css('top',getPosTop(i,j));
+                theNumberCell.css('left',getPosLeft(i,j));
+                theNumberCell.css('background-color',getNumberBackgroundColor( board[i][j] ) );
+                theNumberCell.css('color',getNumberColor( board[i][j] ) );
+
+                theNumberCell.text( getNumberText( board[i][j] ) );
+				
+			}
+			hasConflicted[i][j]=false;	
+		}
+		$(".number-cell").css("line-height",cellSideLength+"px");
+		$(".number-cell").css("font-size",0.3*cellSideLength+"px");
+	}
+}
+function generateOneNumber(){
+	if(nospace(board))
+		return false;
+	//随机一个位置
+	var randx=parseInt(Math.floor(Math.random()*4));
+	var randy=parseInt(Math.floor(Math.random()*4))
+	
+	var times=0;
+	while(times<50){
+		if(board[randx][randy]==0)
+			break;
+			
+		randx=parseInt(Math.floor(Math.random()*4));	
+		randy=parseInt(Math.floor(Math.random()*4))
+		
+		times++;
+	}
+	if(times==50){
+		for(var i=0;i<4;i++)
+			for(var j=0; j<4; j++){
+				if(doard[i][j]==0){
+					randx=i;
+					randy=j;
+				}
+		}
+	}
+	//随机一个数字
+	var randNumber=Math.random()<0.5? 2:4;
+	//在随机的位置上显示数字
+	board[randx][randy]=randNumber;
+	showNumberWithAnimation(randx,randy,randNumber)
+	return true;
+	
 }
 
-function init() {
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            const gridCell = $(`#box-${i}-${j}`);
-            gridCell.css({ top: getPosTop(i, j), left: getPosLeft(i, j) });
-        }
-    }
+$(document).keydown(function(event){
+	switch(event.keyCode){
+		case 37://left
+			event.preventDefault()
+			if(moveLeft()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+			break;			
+		case 38://up
+			event.preventDefault()
+			if(moveUp()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+			break;
+		case 39://right
+			event.preventDefault()
+			if(moveRight()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+			break;
+		case 40://down
+			event.preventDefault()
+			if(moveDown()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+			break;
+	}
+})
 
-    for (let i = 0; i < 4; i++) {
-        board[i] = [];
-        hasConflicted[i] = [];
-        for (let j = 0; j < 4; j++) {
-            board[i][j] = 0;
-            hasConflicted[i][j] = false;
-        }
-    }
-    updateBoardView();
-    score = 0;
+document.addEventListener('touchstart',function(event){
+	startx=event.touches[0].pageX;
+	starty=event.touches[0].pageY;
+})
+
+document.addEventListener('touchstart', function(e) {
+	e.preventDefault();  // 这里正常工作，因为监听器不是被动的
+  }, { passive: false });
+
+document.addEventListener('touchend',function(event){
+	endx=event.changedTouches[0].pageX;
+	endy=event.changedTouches[0].pageY;
+	
+	var deltax=endx-startx;
+	var deltay=endy-starty;
+	
+	if(Math.abs(deltax)<0.3*documentWidth && Math.abs(deltay)<0.3*documentWidth)
+		return;
+	
+	//x轴进行滑动
+	if(Math.abs(deltax)>=Math.abs(deltay)){
+		if(deltax>0){
+			//move right
+			if(moveRight()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+		}else{
+			//move left	
+			if(moveLeft()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+			
+		}
+	}
+	//y轴进行滑动
+	else{
+		if(deltay>0){
+			//move down
+			if(moveDown()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+		}else{
+			//move up
+			if(moveUp()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isgameover()",300);
+			}
+		}	
+	}
+})
+
+function isgameover(){
+	if(nospace(board) && nomove(board)){
+		gameover();	
+	}
 }
 
-// 画
-function updateBoardView() {
-    $(".number-cell").remove();
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            $("#main").append(`<div class="number-cell" id="number-cell-${i}-${j}"></div>`);
-            const theNumberCell = $(`#number-cell-${i}-${j}`);
 
-            if (board[i][j] === 0) {
-                theNumberCell.css({
-                    width: 0,
-                    height: 0,
-                    top: getPosTop(i, j) + cellSideLength / 2,
-                    left: getPosLeft(i, j) + cellSideLength / 2
-                });
-            } else {
-                theNumberCell.css({
-                    width: cellSideLength,
-                    height: cellSideLength,
-                    top: getPosTop(i, j),
-                    left: getPosLeft(i, j),
-                    backgroundColor: getNumberBackgroundColor(board[i][j]),
-                    color: getNumberColor(board[i][j])
-                });
 
-                theNumberCell.text(getNumberText(board[i][j]));
-            }
-            hasConflicted[i][j] = false;
-        }
-        $(".number-cell").css({
-            lineHeight: `${cellSideLength}px`,
-            fontSize: `${0.3 * cellSideLength}px`
-        });
-    }
+
+function moveLeft(){
+	if(!canMoveLeft(board))
+		return false;
+
+	//moveLeft
+	for(var i=0; i<4;i++)
+		for(var j=1; j<4;j++){
+			if(board[i][j]!=0){
+				for(var k=0; k<j;k++){
+					if(board[i][k]==0 && noBlockHorizontal(i,k,j,board)){
+						//move
+						showMoveAnimation(i,j,i,k)
+						board[i][k]=board[i][j]
+						board[i][j]=0;
+						continue
+					}else if(board[i][k]==board[i][j] && noBlockHorizontal(i,k,j,board) && !hasConflicted[i][k]){
+						//move
+						showMoveAnimation(i,j,i,k)
+						//add
+						board[i][k]+=board[i][j]
+						board[i][j]=0;
+						//addscore
+						score+=board[i][k]
+						updateScore(score)
+						
+						hasConflicted[i][k]=true;	
+						continue
+					}
+				}
+			}
+		}
+		
+	setTimeout("updateBoardView()",200)
+	return true;
 }
 
+function moveRight(){
+	if(!canMoveRight(board))
+		return false;
 
-function generateOneNumber() {
-    if (nospace(board)) return false;
-
-    let randX, randY;
-    let times = 0;
-
-    do {
-        randX = Math.floor(Math.random() * 4);
-        randY = Math.floor(Math.random() * 4);
-        times++;
-    } while (times < 50 && board[randX][randY] !== 0);
-
-    if (times === 50) {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                if (board[i][j] === 0) {
-                    randX = i;
-                    randY = j;
-                }
-            }
-        }
-    }
-
-    const randNumber = Math.random() < 0.5 ? 2 : 4;
-    board[randX][randY] = randNumber;
-    showNumberWithAnimation(randX, randY, randNumber);
-    return true;
-}
-
-document.addEventListener('touchstart', function(event) {
-    startX = event.touches[0].pageX;
-    startY = event.touches[0].pageY;
-}, { passive: false });
-
-// 滑动
-document.addEventListener('touchend', function(event) {
-    endX = event.changedTouches[0].pageX;
-    endY = event.changedTouches[0].pageY;
-
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
-
-    if (Math.abs(deltaX) < 0.3 * documentWidth && Math.abs(deltaY) < 0.3 * documentWidth)
-        return;
-
-    if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-        if (deltaX > 0 && moveRight() || deltaX < 0 && moveLeft()) {
-            setTimeout(generateOneNumber, 210);
-            setTimeout(isGameOver, 300);
-        }
-    } else {
-        if (deltaY > 0 && moveDown() || deltaY < 0 && moveUp()) {
-            setTimeout(generateOneNumber, 210);
-            setTimeout(isGameOver, 300);
-        }
-    }
-});
-
-function isGameOver() {
-    if (nospace(board) && nomove(board)) {
-        gameover();
-    }
-}
-
-function moveLeft() {
-    if (!canMoveLeft(board)) return false;
-
-    for (let i = 0; i < 4; i++) {
-        for (let j = 1; j < 4; j++) {
-            if (board[i][j] !== 0) {
-                for (let k = 0; k < j; k++) {
-                    if (board[i][k] === 0 && noBlockHorizontal(i, k, j, board)) {
-                        showMoveAnimation(i, j, i, k);
-                        board[i][k] = board[i][j];
+	//moveRight
+	for(var i=0; i<4;i++)
+		for(var j=2; j>=0;j--){
+			if(board[i][j]!=0){
+				for(var k=3; k>j;k--){
+					if(board[i][k]==0 && noBlockHorizontal(i,k,j,board)){
+						//move
+						showMoveAnimation(i,j,i,k)
+						board[i][k]=board[i][j]
+						board[i][j]=0;
+						continue
+					}else if(board[i][k]==board[i][j] && noBlockHorizontal(i,j,k,board) && !hasConflicted[i][k]){
+						//move
+						showMoveAnimation(i,j,i,k)
+						//add
+						board[i][k] *= 2;
                         board[i][j] = 0;
-                        continue;
-                    } else if (board[i][k] === board[i][j] && noBlockHorizontal(i, k, j, board) && !hasConflicted[i][k]) {
-                        showMoveAnimation(i, j, i, k);
-                        board[i][k] += board[i][j];
-                        board[i][j] = 0;
-                        score += board[i][k];
-                        updateScore(score);
-                        hasConflicted[i][k] = true;
-                        continue;
-                    }
-                }
-            }
-        }
-    }
-
-    setTimeout(updateBoardView, 200);
-    return true;
+						
+						//addscore
+						score += board[i][k]
+						updateScore(score)
+						
+						hasConflicted[i][k]=true;
+						continue
+						
+					}
+				}
+			}
+		}
+		
+	setTimeout("updateBoardView()",200)
+	return true;
 }
 
-function moveRight() {
-    if (!canMoveRight(board)) return false;
 
-    for (let i = 0; i < 4; i++) {
-        for (let j = 2; j >= 0; j--) {
-            if (board[i][j] !== 0) {
-                for (let k = 3; k > j; k--) {
-                    if (board[i][k] === 0 && noBlockHorizontal(i, k, j, board)) {
-                        showMoveAnimation(i, j, i, k);
-                        board[i][k] = board[i][j];
-                        board[i][j] = 0;
-                        continue;
-                    } else if (board[i][k] === board[i][j] && noBlockHorizontal(i, j, k, board) && !hasConflicted[i][k]) {
-                        showMoveAnimation(i, j, i, k);
-                        board[i][k] *= 2;
-                        board[i][j] = 0;
-                        score += board[i][k];
-                        updateScore(score);
-                        hasConflicted[i][k] = true;
-                        continue;
-                    }
-                }
-            }
-        }
-    }
 
-    setTimeout(updateBoardView, 200);
-    return true;
-}
 
-function moveUp() {
-    if (!canMoveUp(board)) return false;
-
-    for (let j = 0; j < 4; j++) {
-        for (let i = 1; i < 4; i++) {
-            if (board[i][j] !== 0) {
-                for (let k = 0; k < i; k++) {
-                    if (board[k][j] === 0 && noBlockVertical(j, k, i, board)) {
-                        showMoveAnimation(i, j, k, j);
+function moveUp(){
+    if( !canMoveUp( board ) )
+        return false;
+    //moveUp
+    for( var j = 0 ; j < 4 ; j ++ )
+        for( var i = 1 ; i < 4 ; i ++ ){
+            if( board[i][j] != 0 ){
+                for( var k = 0 ; k < i ; k ++ ){
+                    if( board[k][j] == 0 && noBlockVertical( j , k , i , board ) ){
+                        showMoveAnimation( i , j , k , j );
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[k][j] === board[i][j] && noBlockVertical(j, k, i, board) && !hasConflicted[k][j]) {
-                        showMoveAnimation(i, j, k, j);
+                    }
+                    else if( board[k][j] == board[i][j] && noBlockVertical( j , k , i , board ) && !hasConflicted[k][j]){
+                        showMoveAnimation( i , j , k , j );
                         board[k][j] *= 2;
                         board[i][j] = 0;
-                        score += board[k][j];
-                        updateScore(score);
-                        hasConflicted[k][j] = true;
+						//addscore
+						score+=board[k][j]
+						updateScore(score)
+						hasConflicted[k][j]=true;
                         continue;
                     }
                 }
             }
         }
-    }
-
-    setTimeout(updateBoardView, 200);
+    setTimeout("updateBoardView()",200);
     return true;
 }
 
-function moveDown() {
-    if (!canMoveDown(board)) return false;
+function moveDown(){
 
-    for (let j = 0; j < 4; j++) {
-        for (let i = 2; i >= 0; i--) {
-            if (board[i][j] !== 0) {
-                for (let k = 3; k > i; k--) {
-                    if (board[k][j] === 0 && noBlockVertical(j, k, i, board)) {
-                        showMoveAnimation(i, j, k, j);
+    if( !canMoveDown( board ) )
+        return false;
+
+    //moveDown
+    for( var j = 0 ; j < 4 ; j ++ )
+        for( var i = 2 ; i>=0 ; i -- ){
+            if( board[i][j] != 0 ){
+                for( var k = 3 ; k >i ; k -- ){
+
+                    if( board[k][j] == 0 && noBlockVertical( j , k , i , board ) ){
+                        showMoveAnimation( i , j , k , j );
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[k][j] === board[i][j] && noBlockVertical(j, i, k, board) && !hasConflicted[k][j]) {
-                        showMoveAnimation(i, j, k, j);
+                    }
+                    else if( board[k][j] == board[i][j] && noBlockVertical( j , i , k , board ) && !hasConflicted[k][j]){
+                        showMoveAnimation( i , j , k , j );
                         board[k][j] *= 2;
                         board[i][j] = 0;
-                        score += board[k][j];
-                        updateScore(score);
-                        hasConflicted[k][j] = true;
+						
+						//addscore
+						score+=board[k][j]
+						updateScore(score)
+						
+						hasConflicted[k][j] = true;
+						
                         continue;
                     }
                 }
             }
         }
-    }
 
-    setTimeout(updateBoardView, 200);
+    setTimeout("updateBoardView()",200);
     return true;
 }
 
-function gameover() {
-    $(".over").show();
-    $(document).click(() => $(".over").hide());
+function gameover(){
+	$(".over").show();
+	$(document).click(function(){
+		$(".over").hide()
+	})
 }
-
-$("#bot").click(() => {
-    score = 0;
-    updateScore(score);
-});
+$("#bot").click(function(){
+score=0;
+updateScore(score)	
+})
