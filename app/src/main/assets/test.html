@@ -22,8 +22,13 @@
 
         function handleItemDataList(data) {
             try {
+<<<<<<< Updated upstream
                 const jsonData = JSON.parse(data);
                 console.log("Game: " + jsonData.item[0].gameName + "\nIntroduction: " + jsonData.item[0].gameIntroduce);
+=======
+                const tmp = JSON.parse(data); // 解析 JSON 数据
+                console.log("Game: " + tmp.item[0].gameName + "\nIntroduction: " + tmp.item[0].gameIntroduce);
+>>>>>>> Stashed changes
             } catch (e) {
                 console.error("Error parsing JSON: ", e);
                 alert("Error parsing JSON: " + e.message);

@@ -1,5 +1,5 @@
-var screenWidth = Math.min(window.innerWidth*0.85,904);
-var screenHeight = Math.min(window.innerHeight*0.9,852);
+var screenWidth = Math.min(window.innerWidth,904);
+var screenHeight = Math.min(window.innerHeight,852);
 var HEIGHT = screenHeight;
 var WIDTH = screenWidth;
 var bulletSpeed = 10;           //控制子弹的速度 越大越快
@@ -378,7 +378,7 @@ function Enemy1(imgs){              //小飞机
             this.canDelete = true;
         }
         if(this.moveCount == this.randomshoot){
-            this.fire();
+            //this.fire();
             
             moveCount = 0;
         }
@@ -387,7 +387,7 @@ function Enemy1(imgs){              //小飞机
                 this.index=1;
             }else if(this.index>=imgs.length-1){           //图片全部播放结束 敌机可以消除
                 this.canDelete = true;
-                currentscore -=this.life;
+                currentscore +=1;
             }else{                                          //如果 已经是撞击的一套动画 那就继续播放
                 this.index++;
             }
@@ -406,11 +406,11 @@ function Enemy1(imgs){              //小飞机
             }
         }
     }
-    this.fire = function(){
-        bulletList.list.push(
-            new Bullet(this,enemybullet,true)
-        );
-    }
+    // this.fire = function(){
+    //     bulletList.list.push(
+    //         new Bullet(this,enemybullet,true)
+    //     );
+    // }
 
 }
 //var enemy1 = new Enemy1(enemy1Img);
@@ -435,7 +435,7 @@ function Enemy2(imgs){                          //中飞机
                 this.index=1;
             }else if(this.index>=imgs.length-1){           //图片全部播放结束 敌机可以消除
                 this.canDelete = true;
-                currentscore -=this.life;
+                currentscore +=2;
             }else{                                          //如果 已经是撞击的一套动画 那就继续播放
                 this.index++;
             }
@@ -490,6 +490,7 @@ function Enemy3(imgs){              //大飞机
                 
             }else if(this.index>=imgs.length-1){           //图片全部播放结束 敌机可以消除
                 this.canDelete = true;
+                currentscore +=5;
             }
             // else if(this.index == 2){
             //     console.log("big plane should be here blow,index is%d",this.index);
@@ -497,8 +498,8 @@ function Enemy3(imgs){              //大飞机
             // }
             else{                                          //如果 已经是撞击的一套动画 那就继续播放
                 this.index++;
-                console.log("big plane blowing");
-                currentscore -=this.life;
+                console.log("big plane blowing,current score is %d",this.life);
+                
             }
         }
     }

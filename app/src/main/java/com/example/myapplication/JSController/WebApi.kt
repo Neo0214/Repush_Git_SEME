@@ -24,7 +24,11 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
         val gson= Gson()
         val jsonData = gson.toJson(stateCode).replace("\"", "\\\"")
         Log.d("MyJsonData", jsonData)
+<<<<<<< Updated upstream
         if(mode ==0){
+=======
+        if(mode == 0){
+>>>>>>> Stashed changes
             val jsCode = "javascript:handleItemDataOne(\"$jsonData\")"
             webView.post {
                 webView.evaluateJavascript(jsCode, null)
@@ -54,8 +58,12 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
 //                   webView.evaluateJavascript(jsCode, null)
 //               }
                val data = StateCode(200,"success select",item)
+<<<<<<< Updated upstream
                outputMyData(data,0)
 
+=======
+               outputMyData(data,1)
+>>>>>>> Stashed changes
            }
        }
     }
@@ -66,7 +74,11 @@ class WebApi(private val webView: WebView,private val myviewModel: GameViewModel
             withContext(Dispatchers.Main)
             {
                 val data = StateCode(200,"success select",item)
+<<<<<<< Updated upstream
                 outputMyData(data,1)
+=======
+                outputMyData(data,0)
+>>>>>>> Stashed changes
             }
         }
     }

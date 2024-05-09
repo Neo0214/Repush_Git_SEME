@@ -75,11 +75,8 @@
 
 
   <!--测试按钮-->
-  <!--    <button @click="getGameData()">Test Select</button>-->
   <!--    <button @click="updateGameTime()">UpdateTime Test</button>-->
-  <!--    <button @click="open2048()">2048</button>-->
-  <!--    <button @click="openplane()">plane</button>-->
-  <!--    <button @click="opensheep()">sheep</button>-->
+
 </template>
 
 <script>
@@ -92,8 +89,15 @@ export default {
 
   //刷新该页面时更新数据
   mounted() {
+<<<<<<< Updated upstream
     this.getGameDataByid(1);
     this.getAllGameData();
+=======
+    this.mainGame=this.getGameDataByid(1).item;
+    console.log(this.mainGame);
+    this.recommandGameList=this.getAllGameData().item;
+    console.log(this.recommandGameList);
+>>>>>>> Stashed changes
   },
 
   data() {
@@ -145,16 +149,27 @@ export default {
 
   methods: {
     getGameDataByid(id) {
+<<<<<<< Updated upstream
       window.Android.getOneGameInfo(id); // 获取 id 为 1 的游戏数据
     },
     updateGameTime(){
       window.Android.UpdateGameTime(1,0.5);
+=======
+      return  JSON.parse(window.Android.getOneGameInfo(id)); // 获取 id 为 1 的游戏数据
+    },
+    updateGameTime(){
+      return window.Android.UpdateGameTime(1,0.5);
+    },
+    getAllGameData(){
+      return  JSON.parse(window.Android.getAllGameInfo());
+>>>>>>> Stashed changes
     },
     getAllGameData(){
       window.Android.getAllGameInfo();
     },
     handleItemDataOne(data) {
       try {
+<<<<<<< Updated upstream
         const tmp = JSON.parse(data); // 解析 JSON 数据
         // console.log("Game: " + tmp.item.gameName + "\nIntroduction: " + tmp.item.gameIntroduce);
         this.mainGame=tmp.item;
@@ -168,6 +183,11 @@ export default {
         const tmp = JSON.parse(data); // 解析 JSON 数据
         // console.log("Game: " + tmp.gameName + "\nIntroduction: " + tmp.gameIntroduce);
         this.recommandGameList=tmp.item;
+=======
+        const item = JSON.parse(data); // 解析 JSON 数据
+        console.log("Game: " + item.item.gameName + "\nIntroduction: " + item.gameIntroduce);
+        return item
+>>>>>>> Stashed changes
       } catch (e) {
         console.error("Error parsing JSON: ", e);
         alert("Error parsing JSON: " + e.message); // 显示解析错误
