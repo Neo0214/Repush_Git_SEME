@@ -183,9 +183,13 @@ export default {
     //跳转到游戏
     openGame(gameName){
       let gameUrl;
-      gameUrl='/'+ (String)(gameName) +'/index.html';
+      if(gameName==="肉鸽魔塔")
+        gameUrl='101.43.38.150:1055';   //肉鸽小游戏的网址
+      else
+        gameUrl='/'+ (String)(gameName) +'/index.html';
       this.openLink(gameUrl);
     },
+
 
     //返回游戏对应图片路径
     returnGameImgUrl(gameName){
