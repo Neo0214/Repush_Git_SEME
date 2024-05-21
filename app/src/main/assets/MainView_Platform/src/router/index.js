@@ -26,6 +26,10 @@ const router = createRouter({
             path: '/gameLibrary',
             component: () => import('../components/gameLibrary.vue')
         },
+        {
+            path:"/searchForMainView",
+            component:()=>import('../components/searchForMainView.vue')
+        }
 
     ]
 })

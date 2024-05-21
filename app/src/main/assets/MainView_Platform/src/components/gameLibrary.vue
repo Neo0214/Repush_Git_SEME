@@ -20,10 +20,10 @@
   <el-divider style="position: relative; top:-15vw" />
 
   <div style="position: relative; top:-10vw;left:0vw">
-    <el-row :gutter="20" v-for="item in myGameList">
+    <el-row :gutter="20" v-for="item in filteredGameList">
       <el-col>
         <div style="position: relative;top:-17vw;left:-5vw">
-          <div class="itemBox">
+          <div class="itemBox" @click="openGame(item.gameName)">
             <!--上部图片-->
             <el-row :gutter="20">
               <el-col :span="24">
@@ -66,8 +66,14 @@ export default {
   components: {
     bar:Bar,
   },
+  mounted() {
+    this.filteredGameList = this.myGameList;
+  },
+
   data() {
     return {
+      searchInput: '',    //搜索框的内容
+
       myGameList:[
         {
           bestScoreInGame:0,
@@ -95,17 +101,33 @@ export default {
         },
         {
           bestScoreInGame:0,
+          gameIntroduce:"趣味肉鸽现在开始！！",
+          gameName:"肉鸽魔塔",
+          gamePlayTime:6.3,
+          gameRecommendationScore:9.5,
+          id:4,
+        },
+        {
+          bestScoreInGame:0,
           gameIntroduce:"酷跑快跑！！！",
           gameName:"天天酷跑",
           gamePlayTime:9.9,
           gameRecommendationScore:9.6,
-          id:4,
+          id:5,
         }
       ],
+      filteredGameList: []
     }
   },
 
   methods: {
+    //搜索
+    search() {
+      this.filteredGameList = this.myGameList.filter(game => {
+        return game.gameName.includes(this.searchInput) || game.gameIntroduce.includes(this.searchInput);
+      });
+    },
+
     //打开链接的页面
     openLink(url) {
       window.open(url, '_blank');

@@ -1,25 +1,27 @@
 <template>
-  <div class="bottom-nav">
-    <router-link to="/" exact active-class="active" class="nav-item">
+  <div class="bottomBox">
+    <div class="bottom-nav">
+      <router-link to="/" exact active-class="active" class="nav-item">
       <span v-bind:class="{ 'main': !isActive[0], 'main-active': isActive[0] }">
       </span>
-      <span class="nav-text">推荐</span>
-    </router-link>
-    <router-link to="/ranking" active-class="active" class="nav-item">
+        <span class="nav-text">推荐</span>
+      </router-link>
+      <router-link to="/ranking" active-class="active" class="nav-item">
       <span v-bind:class="{ 'ranking': !isActive[1], 'ranking-active': isActive[1] }">
       </span>
-      <span class="nav-text">排行榜</span>
-    </router-link>
-    <router-link to="/gameLibrary" active-class="active" class="nav-item">
+        <span class="nav-text">排行榜</span>
+      </router-link>
+      <router-link to="/gameLibrary" active-class="active" class="nav-item">
       <span v-bind:class="{ 'gameLibrary': !isActive[2], 'gameLibrary-active': isActive[2] }">
       </span>
-      <span class="nav-text">游戏库</span>
-    </router-link>
-    <router-link to="/personal" active-class="active" class="nav-item">
+        <span class="nav-text">游戏库</span>
+      </router-link>
+      <router-link to="/personal" active-class="active" class="nav-item">
       <span v-bind:class="{ 'personal': !isActive[3], 'personal-active': isActive[3] }">
       </span>
-      <span class="nav-text">我的</span>
-    </router-link>
+        <span class="nav-text">我的</span>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -58,6 +60,15 @@ export default {
 </script>
 
 <style scoped>
+.bottomBox{
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  /*justify-content: space-between;*/
+  align-items: center;
+}
 .bottom-nav {
   position: fixed;
   bottom: 0;

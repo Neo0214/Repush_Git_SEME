@@ -1,5 +1,5 @@
-var screenWidth = Math.min(window.innerWidth*0.85,904);
-var screenHeight = Math.min(window.innerHeight*0.9,852);
+var screenWidth = Math.min(window.innerWidth,1000);
+var screenHeight = Math.min(window.innerHeight,1500);
 var HEIGHT = screenHeight;
 var WIDTH = screenWidth;
 var bulletSpeed = 10;           //控制子弹的速度 越大越快
@@ -9,6 +9,7 @@ var enemy2Speed = 4;            //控制中号飞机下落的速度
 var enemy3Speed = 2;            //控制大飞机下落的速度
 var difficulty = 150;            //控制游戏难度（值越大 生成的敌机越少）
 var heroLife = 3;               //英雄飞机的数量
+var hasload = 0;                // 记录有没有load
 
 var canvas = document.getElementById('c1');
 canvas.width = screenWidth;
@@ -378,7 +379,7 @@ function Enemy1(imgs){              //小飞机
             this.canDelete = true;
         }
         if(this.moveCount == this.randomshoot){
-            this.fire();
+            // this.fire();
             
             moveCount = 0;
         }
@@ -406,11 +407,11 @@ function Enemy1(imgs){              //小飞机
             }
         }
     }
-    this.fire = function(){
-        bulletList.list.push(
-            new Bullet(this,enemybullet,true)
-        );
-    }
+    // this.fire = function(){
+    //     bulletList.list.push(
+    //         new Bullet(this,enemybullet,true)
+    //     );
+    // }
 
 }
 //var enemy1 = new Enemy1(enemy1Img);
@@ -633,6 +634,9 @@ function drawGameover(){
 
 }
 
+function switch2start(){
+    curPhase = PHASE_READY
+}
 
 //30帧
 var timer = setInterval(function(){
@@ -649,10 +653,20 @@ var timer = setInterval(function(){
             ctx.fillText("Click To Start",WIDTH/2-100,logoplcheight+relavantheight);
             break;
         case PHASE_LOADING :
-            loading.draw();
-            loading.animation();
+            if(hasload ==0){
+                loading.draw();
+                loading.animation();
+            }
+            else{
+                curPhase = PHASE_PLAY;
+                bulletList.list= [];
+                enemyList.list = []
+            }
             break;
         case PHASE_PLAY:
+            if(hasload ==0){
+                hasload = 1;
+            }
             hero.draw();
             hero.move();
 
@@ -682,7 +696,7 @@ var timer = setInterval(function(){
             drawUI();
             break;
     }
-},33);
+},60);
 
 
 

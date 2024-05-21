@@ -84,6 +84,7 @@
 
 <script>
 import Bar from './bar.vue'
+import router from "@/router/index.js";
 
 export default {
   components: {
@@ -92,12 +93,15 @@ export default {
 
   //刷新该页面时更新数据
   mounted() {
-    this.getGameDataByid(1);
-    this.getAllGameData();
+    // this.getGameDataByid(1);
+    // this.getAllGameData();
   },
 
   data() {
     return {
+      searchInput: '',    //搜索框的内容
+
+
       mainGame:{
         bestScoreInGame:0,
         gameIntroduce:"益智游戏，今日你2048了吗",
@@ -133,11 +137,19 @@ export default {
         },
         {
           bestScoreInGame:0,
+          gameIntroduce:"趣味肉鸽现在开始！！",
+          gameName:"肉鸽魔塔",
+          gamePlayTime:6.3,
+          gameRecommendationScore:9.5,
+          id:4,
+        },
+        {
+          bestScoreInGame:0,
           gameIntroduce:"酷跑快跑！！！",
           gameName:"天天酷跑",
           gamePlayTime:9.9,
           gameRecommendationScore:9.6,
-          id:4,
+          id:5,
         }
       ],
     }
@@ -195,7 +207,11 @@ export default {
     },
 
     search(){
-      //搜索
+      if(this.searchInput!=='') {
+        const queryString = encodeURIComponent(JSON.stringify(this.searchInput));
+        const url = `${window.location.origin}/searchForMainView?data=${queryString}`;
+        this.$router.push(url);
+      }
     },
 
 
@@ -241,6 +257,7 @@ export default {
   position: relative;
   left:3vw;
   top:6vw;
+  border-radius: 50px;
 }
 
 .mainForP1{
