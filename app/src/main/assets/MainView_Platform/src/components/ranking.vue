@@ -1,10 +1,10 @@
 <template>
   <!--排行榜表头图片-->
-  <div style="position: relative;left:-9vw;top:-8vw">
+  <div style="position: relative;left:-7vw;top:-8vw">
     <img :src="'/imgForMain/rankingImg.png'" class="rankingImg">
   </div>
   <!--排行榜主体-->
-  <div class="rankingBox" style="position: relative;left:-9vw;top:-12vw">
+  <div class="rankingBox" style="position: relative;left:-7vw;top:-12vw">
     <!--排行榜导航-->
     <div class="selector" style="position: relative;left:6vw;top:2vw">
       <ul class="nav-list">

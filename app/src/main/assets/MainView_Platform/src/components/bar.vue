@@ -16,11 +16,11 @@
       </span>
         <span class="nav-text">游戏库</span>
       </router-link>
-      <router-link to="/personal" active-class="active" class="nav-item">
-      <span v-bind:class="{ 'personal': !isActive[3], 'personal-active': isActive[3] }">
-      </span>
-        <span class="nav-text">我的</span>
-      </router-link>
+<!--      <router-link to="/personal" active-class="active" class="nav-item">-->
+<!--      <span v-bind:class="{ 'personal': !isActive[3], 'personal-active': isActive[3] }">-->
+<!--      </span>-->
+<!--        <span class="nav-text">我的</span>-->
+<!--      </router-link>-->
     </div>
   </div>
 </template>
