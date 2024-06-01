@@ -38,13 +38,13 @@
               </div>
             </el-col>
             <!--排行榜内容-->
-            <el-col :span="4" style="position: relative;left:-1vw;top:-2vw">
+            <el-col :span="4" style="position: relative;left:-1vw;top:-2vw" @click="openDetail(item.id)">
               <img class="rankingGameLogo" :src="returnGameImgUrl(item.gameName)" alt="简介小图">
             </el-col>
             <el-col :span="8" style="position: relative;left:0vw;">
               <div>
-                <h2 class="rankingGameName">{{item.gameName}}</h2>
-                <!--简介-->
+                <h2 class="rankingGameName" @click="openDetail(item.id)">{{item.gameName}}</h2>
+                <!--星星-->
                 <el-rate
                     v-model="item.gameRecommendationScore" size="large"
                     disabled show-score text-color="#ff9900" score-template="{value}"
@@ -69,50 +69,22 @@
 import Bar from "@/components/bar.vue";
 
 export default {
+  props:['gameTotal'],
   name: "ranking",
 
   components: {
     bar:Bar,
   },
 
+  mounted() {
+    this.rankingGameList=JSON.parse(JSON.stringify(this.gameTotal));
+    this.handleScore();
+  },
+
   data() {
     return {
       selected: '口碑榜', // 默认选中的选项
-
-      rankingGameList:[
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"益智游戏，今日你2048了吗",
-          gameName:"2048",
-          gamePlayTime:10.0,
-          gameRecommendationScore:4.2,
-          id:1,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"自定义主题，通勤娱乐优选",
-          gameName:"羊了个羊",
-          gamePlayTime:13.0,
-          gameRecommendationScore:3.8,
-          id:2,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"回味童年经典",
-          gameName:"飞机大战",
-          gamePlayTime:7.3,
-          gameRecommendationScore:4.9,
-          id:3,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"酷跑快跑！！！",
-          gameName:"天天酷跑",
-          gamePlayTime:9.9,
-          gameRecommendationScore:4.6,
-          id:4,
-        }
-      ],
+      rankingGameList:[],
     };
   },
   methods: {
@@ -154,6 +126,12 @@ export default {
     //返回游戏对应图片路径
     returnGameBigImgUrl(gameName){
       return '/imgForMain/'+ (String)(gameName) +'Big.png';
+    },
+
+    openDetail(id){
+      const queryString = encodeURIComponent(JSON.stringify(id));
+      const url = `${window.location.origin}/gameDetail?data=${queryString}`;
+      this.$router.push(url);
     },
   }
 

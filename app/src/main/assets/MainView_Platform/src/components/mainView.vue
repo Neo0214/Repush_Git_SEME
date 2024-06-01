@@ -27,10 +27,10 @@
       <!--内嵌的简介-->
       <div class="introBox">
         <el-row :gutter="20" class="introduction">
-          <el-col :span="4" style="position: relative;left:2vw;">
+          <el-col :span="4" style="position: relative;left:2vw;" @click="openDetail(mainGame.id)">
             <img class="mainGameLogo" :src="returnGameImgUrl(mainGame.gameName)" alt="简介小图">
           </el-col>
-          <el-col :span="16">
+          <el-col :span="16" @click="openDetail(mainGame.id)">
             <div class="textBox">
               <h2 class="mainGameName">{{mainGame.gameName}}</h2>
               <p class="mainGameIntro">{{ mainGame.gameIntroduce }}</p>
@@ -53,10 +53,10 @@
         <!--内嵌的简介-->
         <div class="recommandBox">
           <el-row :gutter="30">
-            <el-col :span="6" style="position: relative;left:2vw;">
+            <el-col :span="6" style="position: relative;left:2vw;"  @click="openDetail(item.id)">
               <img class="recommandGameLogo" :src="returnGameImgUrl(item.gameName)" alt="简介小图">
             </el-col>
-            <el-col :span="14">
+            <el-col :span="14" @click="openDetail(item.id)">
               <div class="recommandtextBox">
                 <h2 class="recommandGameName">{{item.gameName}}</h2>
                 <p class="recommandGameIntro">{{ item.gameIntroduce }}</p>
@@ -87,14 +87,16 @@ import Bar from './bar.vue'
 import router from "@/router/index.js";
 
 export default {
+  props:['gameTotal'],
+
   components: {
     bar:Bar,
   },
 
   //刷新该页面时更新数据
   mounted() {
-    // this.getGameDataByid(1);
-    // this.getAllGameData();
+    this.mainGame=this.gameTotal[0];
+    this.recommandGameList=this.gameTotal;
   },
 
   data() {
@@ -102,116 +104,24 @@ export default {
       searchInput: '',    //搜索框的内容
 
 
-      mainGame:{
-        bestScoreInGame:0,
-        gameIntroduce:"益智游戏，今日你2048了吗",
-        gameName:"2048",
-        gamePlayTime:100.0,
-        gameRecommendationScore:9.8,
-        id:1,
-      },
-      recommandGameList:[
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"益智游戏，今日你2048了吗",
-          gameName:"2048",
-          gamePlayTime:10.0,
-          gameRecommendationScore:9.2,
-          id:1,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"自定义主题，通勤娱乐优选",
-          gameName:"羊了个羊",
-          gamePlayTime:13.0,
-          gameRecommendationScore:8.8,
-          id:2,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"回味童年经典",
-          gameName:"飞机大战",
-          gamePlayTime:7.3,
-          gameRecommendationScore:9.9,
-          id:3,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"趣味肉鸽现在开始！！",
-          gameName:"肉鸽魔塔",
-          gamePlayTime:6.3,
-          gameRecommendationScore:9.5,
-          id:4,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"酷跑快跑！！！",
-          gameName:"天天酷跑",
-          gamePlayTime:9.9,
-          gameRecommendationScore:9.6,
-          id:5,
-        }
-      ],
+      mainGame:{},
+      recommandGameList:[],
     }
   },
 
   methods: {
-    async getGameData() {
-      try {
-        await this.handleItemDataList(window.Android.getAllGameInfo()); // 等待 handleItemDataList 完成
-        console.log("Game data loaded successfully");
-      } catch (e) {
-        console.error("Error loading game data: ", e);
-      }
-    },
-
-    async getOneGameData() {
-      try {
-        await this.handleItemDataOne(window.Android.getOneGameInfo(1000));
-        console.log("Game data loaded successfully");
-      } catch (e) {
-        console.error("Error loading game data: ", e);
-      }
-    },
-
-    // updateGameTime(){
-    //   window.Android.UpdateGameTime(1, 0.5); // 更新游戏时间
-    // },
-
-    handleItemDataList(data) {
-      return new Promise((resolve, reject) => {
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Game: " + jsonData.item[0].gameName + "\nIntroduction: " + jsonData.item[0].gameIntroduce);
-          resolve(); // Promise 成功完成
-        } catch (e) {
-          console.error("Error parsing JSON: ", e);
-          alert("Error parsing JSON: " + e.message);
-          reject(e); // Promise 失败
-        }
-      });
-    },
-
-    handleItemDataOne(data) {
-      return new Promise((resolve, reject) => {
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Game: " + jsonData.item.gameName + "\nIntroduction: " + jsonData.item.gameIntroduce);
-          resolve(); // Promise 成功完成
-        } catch (e) {
-          console.error("Error parsing JSON: ", e);
-          alert("Error parsing JSON: " + e.message);
-          reject(e); // Promise 失败
-        }
-      });
-    },
-
     search(){
       if(this.searchInput!=='') {
         const queryString = encodeURIComponent(JSON.stringify(this.searchInput));
         const url = `${window.location.origin}/searchForMainView?data=${queryString}`;
         this.$router.push(url);
       }
+    },
+
+    openDetail(id){
+      const queryString = encodeURIComponent(JSON.stringify(id));
+      const url = `${window.location.origin}/gameDetail?data=${queryString}`;
+      this.$router.push(url);
     },
 
 

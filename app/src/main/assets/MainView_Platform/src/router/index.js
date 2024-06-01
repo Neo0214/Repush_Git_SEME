@@ -25,8 +25,11 @@ const router = createRouter({
         {
             path:"/searchForMainView",
             component:()=>import('../components/searchForMainView.vue')
+        },
+        {
+            path:"/gameDetail",
+            component:()=>import('../components/gameDetail.vue')
         }
-
     ]
 })
 export default router;

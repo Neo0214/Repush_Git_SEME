@@ -31,7 +31,7 @@ export default {
 
   mounted() {
     const currentRoute = this.$route; // 获取当前路由
-    console.log(currentRoute);
+    // console.log(currentRoute);
     if(currentRoute.fullPath==='/')
       this.isActive[0]=true;
     else if(currentRoute.fullPath==='/ranking'){
@@ -62,7 +62,7 @@ export default {
 <style scoped>
 .bottomBox{
   position: fixed;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
   height: 50px;
   background-color: #fff;

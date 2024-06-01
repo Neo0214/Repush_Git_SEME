@@ -48,8 +48,13 @@
 import Bar from './bar.vue'
 
 export default {
+  props:['gameTotal'],
   components: {
     bar:Bar,
+  },
+
+  mounted() {
+    this.myGameList=this.gameTotal;
   },
 
   created() {
@@ -66,103 +71,15 @@ export default {
   data() {
     return {
       searchInput: '',    //搜索框的内容
-      myGameList:[
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"益智游戏，今日你2048了吗",
-          gameName:"2048",
-          gamePlayTime:10.0,
-          gameRecommendationScore:9.2,
-          id:1,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"自定义主题，通勤娱乐优选",
-          gameName:"羊了个羊",
-          gamePlayTime:13.0,
-          gameRecommendationScore:8.8,
-          id:2,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"回味童年经典",
-          gameName:"飞机大战",
-          gamePlayTime:7.3,
-          gameRecommendationScore:9.9,
-          id:3,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"趣味肉鸽现在开始！！",
-          gameName:"肉鸽魔塔",
-          gamePlayTime:6.3,
-          gameRecommendationScore:9.5,
-          id:4,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"酷跑快跑！！！",
-          gameName:"天天酷跑",
-          gamePlayTime:9.9,
-          gameRecommendationScore:9.6,
-          id:5,
-        }
-      ],
+      myGameList:[],
       filteredGameList: [],
     }
   },
 
   methods: {
-    async getGameData() {
-      try {
-        await this.handleItemDataList(window.Android.getAllGameInfo()); // 等待 handleItemDataList 完成
-        console.log("Game data loaded successfully");
-      } catch (e) {
-        console.error("Error loading game data: ", e);
-      }
-    },
-
-    async getOneGameData() {
-      try {
-        await this.handleItemDataOne(window.Android.getOneGameInfo(1000));
-        console.log("Game data loaded successfully");
-      } catch (e) {
-        console.error("Error loading game data: ", e);
-      }
-    },
-
     // updateGameTime(){
     //   window.Android.UpdateGameTime(1, 0.5); // 更新游戏时间
     // },
-
-    handleItemDataList(data) {
-      return new Promise((resolve, reject) => {
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Game: " + jsonData.item[0].gameName + "\nIntroduction: " + jsonData.item[0].gameIntroduce);
-          resolve(); // Promise 成功完成
-        } catch (e) {
-          console.error("Error parsing JSON: ", e);
-          alert("Error parsing JSON: " + e.message);
-          reject(e); // Promise 失败
-        }
-      });
-    },
-
-    handleItemDataOne(data) {
-      return new Promise((resolve, reject) => {
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Game: " + jsonData.item.gameName + "\nIntroduction: " + jsonData.item.gameIntroduce);
-          resolve(); // Promise 成功完成
-        } catch (e) {
-          console.error("Error parsing JSON: ", e);
-          alert("Error parsing JSON: " + e.message);
-          reject(e); // Promise 失败
-        }
-      });
-    },
-
     search(){
       if(this.searchInput==='') {
         this.$router.push('/mainView');

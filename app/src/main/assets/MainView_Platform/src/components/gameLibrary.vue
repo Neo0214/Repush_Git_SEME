@@ -23,7 +23,7 @@
     <el-row :gutter="20" v-for="item in filteredGameList">
       <el-col>
         <div style="position: relative;top:-17vw;left:-5vw">
-          <div class="itemBox" @click="openGame(item.gameName)">
+          <div class="itemBox" @click="openDetail(item.id)">
             <!--上部图片-->
             <el-row :gutter="20">
               <el-col :span="24">
@@ -61,12 +61,14 @@
 import Bar from "@/components/bar.vue";
 
 export default {
+  props:['gameTotal'],
   name: "gameLibrary",
 
   components: {
     bar:Bar,
   },
   mounted() {
+    this.myGameList=this.gameTotal;
     this.filteredGameList = this.myGameList;
   },
 
@@ -74,48 +76,7 @@ export default {
     return {
       searchInput: '',    //搜索框的内容
 
-      myGameList:[
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"益智游戏，今日你2048了吗",
-          gameName:"2048",
-          gamePlayTime:10.0,
-          gameRecommendationScore:9.2,
-          id:1,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"自定义主题，通勤娱乐优选",
-          gameName:"羊了个羊",
-          gamePlayTime:13.0,
-          gameRecommendationScore:8.8,
-          id:2,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"回味童年经典",
-          gameName:"飞机大战",
-          gamePlayTime:7.3,
-          gameRecommendationScore:9.9,
-          id:3,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"趣味肉鸽现在开始！！",
-          gameName:"肉鸽魔塔",
-          gamePlayTime:6.3,
-          gameRecommendationScore:9.5,
-          id:4,
-        },
-        {
-          bestScoreInGame:0,
-          gameIntroduce:"酷跑快跑！！！",
-          gameName:"天天酷跑",
-          gamePlayTime:9.9,
-          gameRecommendationScore:9.6,
-          id:5,
-        }
-      ],
+      myGameList:[],
       filteredGameList: []
     }
   },
@@ -141,6 +102,12 @@ export default {
       else
         gameUrl='/'+ (String)(gameName) +'/index.html';
       this.openLink(gameUrl);
+    },
+
+    openDetail(id){
+      const queryString = encodeURIComponent(JSON.stringify(id));
+      const url = `${window.location.origin}/gameDetail?data=${queryString}`;
+      this.$router.push(url);
     },
 
 
