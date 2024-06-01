@@ -189,9 +189,9 @@ export default {
     //评分
     makeScore(){
       // console.log(this.value);
-      this.gameTotal[this.gamePresent.id-1].gameRecommendationScore=
+      this.gameTotal[this.gamePresent.id-1].gameRecommendationScore=(
           (this.gameTotal[this.gamePresent.id-1].gameRecommendationScore*this.gameTotal[this.gamePresent.id-1].n
-              +this.value)/(this.gameTotal[this.gamePresent.id-1].n+1);
+              +this.value)/(this.gameTotal[this.gamePresent.id-1].n+1)).toFixed(1);
       this.gameTotal[this.gamePresent.id-1].n++;
     }
   },
