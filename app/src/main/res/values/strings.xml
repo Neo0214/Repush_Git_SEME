@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MyApplication</string>
+    <string name="app_name">TipTap</string>
+    <string name="theURL">"101.43.38.150:5173"</string>
 </resources>

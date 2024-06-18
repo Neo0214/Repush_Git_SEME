@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -28,7 +28,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -40,6 +42,76 @@ import com.example.myapplication.GameViewModel.GameViewModelFactory
 
 import androidx.compose.runtime.livedata.observeAsState
 import com.example.myapplication.JSController.WebApi
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.DownloadManager
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
+import android.net.Uri
+import android.net.http.SslError
+import android.os.Environment
+import android.util.Base64
+import android.view.View
+import android.webkit.JavascriptInterface
+import android.webkit.JsPromptResult
+import android.webkit.JsResult
+import android.webkit.SslErrorHandler
+import android.webkit.URLUtil
+import android.webkit.ValueCallback
+import android.widget.EditText
+import android.widget.Toast
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.google.accompanist.web.AccompanistWebChromeClient
+import com.google.accompanist.web.AccompanistWebViewClient
+//import com.google.accompanist.web.AccompanistWebChromeClient
+//import com.google.accompanist.web.AccompanistWebViewClient
+import com.google.accompanist.web.WebView
+import com.google.accompanist.web.rememberSaveableWebViewState
+import com.google.accompanist.web.rememberWebViewNavigator
+//import com.google.accompanist.web.rememberSaveableWebViewState
+//import com.google.accompanist.web.rememberWebViewNavigator
+import com.google.accompanist.web.WebView
+import com.google.accompanist.web.rememberSaveableWebViewState
+import com.google.accompanist.web.rememberWebViewNavigator
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileWriter
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.util.Date
+import java.util.function.Consumer
 
 class MainActivity : ComponentActivity() {
     // 设置游戏简介
@@ -63,8 +135,8 @@ class MainActivity : ComponentActivity() {
 //            }
 //        }
 //    }
-    private val url ="file:///android_asset/test.html"
-//    private val url = "http://192.168.56.1:3000/"
+//    private val url ="file:///android_asset/test.html"
+    private val myurl = getString(R.string.theURL)
 
     private val appDataContainer:AppDataContainer = AppDataContainer(this)
     private val viewModel: GameViewModel by viewModels<GameViewModel> {
@@ -75,21 +147,40 @@ class MainActivity : ComponentActivity() {
 //        SetGameInfo()
 
         setContent {
-
-            Column {
-//                MyText("游戏主界面");
-
-//                MyCardFront(gameInfoArray[0],startForResult);
-//                MyCardFront(gameInfo = gameInfoArray[1], startForResult =startForResult )
-                WebViewScr(modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize(), url =url, viewModel = viewModel )
-//                InsertButton(viewModel = viewModel)
-//                GetButton(viewModel = viewModel)
+            Column(modifier = Modifier.fillMaxSize()) {
+//                WebViewScr(modifier = Modifier
+//                    .weight(1f)
+//                    .fillMaxSize(), url =url, viewModel = viewModel )
+                WebView(state = rememberSaveableWebViewState(),
+                    modifier = Modifier.fillMaxSize(),
+                    onCreated = {
+                        webView -> webView.apply {
+                            settings.apply {
+                                javaScriptEnabled = true
+                                javaScriptCanOpenWindowsAutomatically = true
+                                useWideViewPort = true
+                                loadWithOverviewMode = true
+                                layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+                                allowContentAccess = true
+                                defaultTextEncodingName = "utf-8"
+                                domStorageEnabled = true
+                                mediaPlaybackRequiresUserGesture = false
+                                databaseEnabled = true
+                                loadsImagesAutomatically = true
+                                setNeedInitialFocus(true)
+                                // 下面这行确保内容适应视图端口
+                                setSupportZoom(true)
+                                builtInZoomControls = true
+                                displayZoomControls = false
+                            }
+                        scrollBarStyle = View.SCROLLBARS_OUTSIDE_INSET
+                        setLayerType(View.LAYER_TYPE_HARDWARE, null)
+                        loadUrl(myurl)
+                    }
+                    })
             }
         }
     }
-}
 @Composable
 fun WebViewScr(modifier: Modifier,url: String,viewModel: GameViewModel) {
     AndroidView(
@@ -102,20 +193,29 @@ fun WebViewScr(modifier: Modifier,url: String,viewModel: GameViewModel) {
                         return true
                     }
                 }
-                settings.javaScriptEnabled = true // 启用 JavaScript
-                addJavascriptInterface(WebApi(this,viewModel), "Android") // 注入接口
+                settings.apply {
+                    javaScriptEnabled = true
+                    javaScriptCanOpenWindowsAutomatically = true
+                    useWideViewPort = true
+                    loadWithOverviewMode = true
+                    layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+                    allowContentAccess = true
+                    defaultTextEncodingName = "utf-8"
+                    domStorageEnabled = true
+                    mediaPlaybackRequiresUserGesture = false
+                    databaseEnabled = true
+                    loadsImagesAutomatically = true
+                    setNeedInitialFocus(true)
 
-//                // 允许同源政策
-//                settings.allowFileAccess = true
-//                settings.allowContentAccess = true
-//                settings.allowFileAccessFromFileURLs = true
-//                settings.allowUniversalAccessFromFileURLs = true
+                }
+                addJavascriptInterface(WebApi(this, viewModel), "Android") // 注入接口
 
                 loadUrl(url)
             }
         },
-        modifier = modifier
+        modifier =Modifier.fillMaxSize(),
     )
+
 }
 @Composable
 fun InsertButton(viewModel: GameViewModel) {
@@ -149,9 +249,13 @@ fun GetButton(viewModel: GameViewModel) {
     }
 }
 
-// 游戏大厅介绍游戏的控件
+
+
+}
+
+ //游戏大厅介绍游戏的控件
 //@Composable
-//fun MyCardFront(gameInfo: GameInfo,startForResult: ActivityResultLauncher<Intent>){
+//fun MyCardFront(gameInfo: Item,startForResult: ActivityResultLauncher<Intent>){
 //    val context = LocalContext.current
 //
 //    Card(
@@ -192,11 +296,11 @@ fun GetButton(viewModel: GameViewModel) {
 //}
 
 
-@Composable
-fun MyText(name:String){
-    Text(text = name, fontSize = 24.sp)
-}
-
+//@Composable
+//fun MyText(name:String){
+//    Text(text = name, fontSize = 24.sp)
+//}
+//
 // 图片
 //@Composable
 //fun GameImage(gameOrder: GameOrder){
@@ -214,7 +318,7 @@ fun MyText(name:String){
 //        contentScale = ContentScale.FillBounds
 //    )
 //}
-
+//
 // TopBar
 //@Composable
 //fun SearchTopBar(){
@@ -235,7 +339,7 @@ fun MyText(name:String){
 //@Preview(showBackground = true)
 //@Composable
 //fun tmp(){
-//    CardUIDesign(gameInfo = GameInfo("2048","一款简单的2048小游戏",GameOrder.GAME_2048))
+//    WebViewScr()
 //}
 
 

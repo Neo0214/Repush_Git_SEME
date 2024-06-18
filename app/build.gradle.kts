@@ -70,6 +70,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1") // 使用最新版本
     implementation ("androidx.compose.runtime:runtime-livedata")
     implementation ("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.accompanist:accompanist-webview:0.33.2-alpha")
 
 
     implementation(libs.androidx.core.ktx)
@@ -88,5 +89,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(kotlin("script-runtime"))
 
 }
